@@ -1,7 +1,9 @@
 export const colors = {
-    yellow: "#FFCD38",  // yellow
-    orange: "#FF8D29",  // orange
-    purple: "#541690",  // purple
-    pink: "#FF4949",    // pink
+    backgroundColor: "#FFF6F4", // white
+    primaryColor: "#525FE1",    // blue
+    secondaryColor: "#F86F03", // orange
+    tertiaryColor: "#FFA41B",  // yellow
+    
+    
     
 }

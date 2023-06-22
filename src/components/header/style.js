@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     headerWrapper: {
         width: "100%",
         height: 50,
-        backgroundColor: colors.purple,
+        backgroundColor: colors.primaryColor,
         flexDirection: "row",
         gap: 10,
         justifyContent: "center",
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: "bold",
         fontSize: 20,
-        color: colors.yellow
+        color: colors.tertiaryColor
     }
 });
 

@@ -4,7 +4,7 @@ import { colors } from "./constants";
 const generalStyles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: colors.yellow
+        backgroundColor: colors.backgroundColor
     }
 });
 

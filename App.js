@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   SafeAreaView,
@@ -15,26 +15,75 @@ import {
   Text,
   useColorScheme,
   View,
+  Alert
 } from 'react-native';
 
 import Header from './src/components/header';
+import Input from './src/components/input';
 import generalStyles from './src/utils/generalStyles';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { colors } from './src/utils/constants';
+
 
 function App() {
-  
+  const [text, setText] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const addToDo = () => {
+    Alert.alert("Message", text);
+    const newTodo = {
+      id: String(new Date().getTime()),
+      text: text,
+      date: new Date(),
+      completed: false
+    };
+    setTodos([...todos, newTodo]);
+    setText("");
+  };
+
   return (
     <SafeAreaView style={generalStyles.body}>
       <Header title="My To Do App"/>
-      <View>
-        <Text>To Do App week1</Text>
+      <Input 
+        hasIcon 
+        iconName="add-circle" 
+        value={text} 
+        onChangeText={(text)=>setText(text)} 
+        onIconPress={addToDo}
+      />
+
+      <View style={styles.todosWrapper}>
+        {
+          todos.length === 0 ? (
+            <Text style={styles.emptyText}>Your To Do List is empty.</Text>
+          ) : (
+
+            <ScrollView style={styles.scrollView}>
+              <Text>To Do List is full</Text>
+            </ScrollView>
+          )
+        }
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  
+  todosWrapper: {
+    flex: 1,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    borderWidth: 1,
+    borderColor: colors.primaryColor
+  },
+  emptyText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: colors.primaryColor
+  },
+  scrollView: {
+    flexGrow: 1
+  }
 });
 
 export default App;
