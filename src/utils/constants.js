@@ -4,6 +4,8 @@ export const colors = {
     secondaryColor: "#F86F03", // orange
     tertiaryColor: "#FFA41B",  // yellow
     
+    checkButtonGreen: "#00DFA2",  // green
+    deleteButtonRed: "#FA1E0E",   // red
     
     
 }

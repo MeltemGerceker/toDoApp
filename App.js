@@ -20,6 +20,7 @@ import {
 
 import Header from './src/components/header';
 import Input from './src/components/input';
+import Todo from './src/components/todo';
 import generalStyles from './src/utils/generalStyles';
 import { colors } from './src/utils/constants';
 
@@ -29,7 +30,9 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   const addToDo = () => {
-    Alert.alert("Message", text);
+    if (text === "")
+      return;
+      
     const newTodo = {
       id: String(new Date().getTime()),
       text: text,
@@ -58,7 +61,9 @@ function App() {
           ) : (
 
             <ScrollView style={styles.scrollView}>
-              <Text>To Do List is full</Text>
+              {
+                todos?.map((item) => (<Todo key={item?.id} todo={item}/>))
+              }
             </ScrollView>
           )
         }
@@ -71,9 +76,7 @@ const styles = StyleSheet.create({
   todosWrapper: {
     flex: 1,
     marginVertical: 20,
-    marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: colors.primaryColor
+    marginHorizontal: 10
   },
   emptyText: {
     fontSize: 20,
