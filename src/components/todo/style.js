@@ -21,6 +21,10 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         color: colors.primaryColor
     },
+    completedTitle: {
+        color: colors.deleteButtonRed,
+        textDecorationLine: "line-through"
+    },
     date: {
         color: colors.secondaryColor,
         fontSize: 14,
