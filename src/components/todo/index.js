@@ -6,6 +6,8 @@ import { colors } from "../../utils/constants";
 import Icon from "react-native-vector-icons/AntDesign";
 import EditModal from '../editModal';
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Todo = ({todo={}, todos=[], setTodos=()=>{}}) => {
     const [openModal, setOpenModal] = useState(false);
     const [modalText, setModalText] = useState(todo?.text);
@@ -21,7 +23,13 @@ const Todo = ({todo={}, todos=[], setTodos=()=>{}}) => {
                     style: "destructive",
                     onPress: () => {
                         const filteredTodos = todos?.filter(item => item?.id !== todo?.id);
-                        setTodos(filteredTodos);
+
+                        AsyncStorage.setItem("@todos", JSON.stringify(filteredTodos))
+                        .then(()=>setTodos(filteredTodos))
+                        .catch((error)=> {
+                            Alert.alert("ERROR", "An error occured while deleting this item.");
+                        });
+
                     }
                 },
                 {
@@ -43,8 +51,13 @@ const Todo = ({todo={}, todos=[], setTodos=()=>{}}) => {
             else
                 tempTodos.push(changedTodo);
         }
-        //console.log(tempTodos);
-        setTodos(tempTodos);
+        
+        AsyncStorage.setItem("@todos", JSON.stringify(tempTodos))
+        .then(()=>setTodos(tempTodos))
+        .catch((error)=> {
+            Alert.alert("ERROR", "An error occured while changing the status of this item.");
+        })
+        
     };
 
     const editTodo = () => {
@@ -73,8 +86,16 @@ const Todo = ({todo={}, todos=[], setTodos=()=>{}}) => {
             else
                 tempTodos.push(changedTodo);
         }
-        setTodos(tempTodos);
-        setOpenModal(false);
+
+        AsyncStorage.setItem("@todos", JSON.stringify(tempTodos))
+        .then(()=>{
+            setTodos(tempTodos);
+            setOpenModal(false);
+        })
+        .catch((error)=>{
+            Alert.alert("ERROR", "An error occured while editing this item.");
+        })
+        
     };
 
     return (
