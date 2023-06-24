@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   SafeAreaView,
@@ -23,6 +23,7 @@ import Input from './src/components/input';
 import Todo from './src/components/todo';
 import generalStyles from './src/utils/generalStyles';
 import { colors } from './src/utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function App() {
@@ -39,9 +40,30 @@ function App() {
       date: new Date(),
       completed: false
     };
-    setTodos([...todos, newTodo]);
-    setText("");
+
+    AsyncStorage.setItem("@todos", JSON.stringify([...todos, newTodo]))
+    .then(()=> { // AsyncStorage'a veriyi basariyla yazdiysak, todos'a da atama yapalim.
+      setTodos([...todos, newTodo]);
+      setText("");
+    })
+    .catch((error)=>{
+      Alert.alert("ERROR", "An error occured while saving this item.")
+    });
+   
   };
+
+  useEffect(()=>{
+    // componentDidMount
+    AsyncStorage.getItem("@todos")
+    .then(response=>{
+      console.log(response);
+      if (response != null) { // Eger (response !== null) ise, demek ki AsyncStorage'da boyle bir veri vardir.
+         const parsedResponse = JSON.parse(response); // 1. Once AsyncStorage'daki veriyi parse etmeliyiz
+         setTodos(parsedResponse);                    // 2. Sonra bu veriyi todos'a atamaliyiz.
+      }
+    })
+    .catch(error=>console.log(error));
+  }, []);
 
   return (
     <SafeAreaView style={generalStyles.body}>
@@ -62,12 +84,13 @@ function App() {
 
             <ScrollView style={styles.scrollView}>
               {
-                todos?.map((item) => (<Todo key={item?.id} todo={item}/>))
+                todos?.map((item) => (<Todo key={item?.id} todo={item} todos={todos} setTodos={setTodos}/>))
               }
             </ScrollView>
           )
         }
       </View>
+
     </SafeAreaView>
   );
 }

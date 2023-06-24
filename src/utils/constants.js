@@ -7,5 +7,6 @@ export const colors = {
     checkButtonGreen: "#00DFA2",  // green
     deleteButtonRed: "#FA1E0E",   // red
     
+    bgDisabled: "#00000080" // "rgba(0, 0, 0, 0.5)"
     
 }
